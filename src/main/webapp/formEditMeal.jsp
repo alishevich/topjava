@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
+    <jsp:useBean id="meal" scope="page" type="ru.javawebinar.topjava.model.MealTo"/>
     <c:if test="${meal == null}">
         <title>Add</title>
     </c:if>

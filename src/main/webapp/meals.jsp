@@ -25,7 +25,6 @@
         TABLE {
             border-collapse: collapse;
         }
-
         TD, TH {
             padding: 8px;
             border: 1px solid black;
@@ -40,6 +39,7 @@
         <th></th>
     </tr>
     </thead>
+    <jsp:useBean id="meals" scope="page" type="ru.javawebinar.topjava.model.MealTo"/>
     <c:forEach var="meal" items="${meals}">
         <tr>
         <tr style="color:${meal.excess ? 'red' : 'green'}">
