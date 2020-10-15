@@ -23,12 +23,8 @@ import static ru.javawebinar.topjava.web.SecurityUtil.authUserCaloriesPerDay;
 public class MealRestController {
     protected final Logger log = LoggerFactory.getLogger(getClass());
 
-    private final MealService service;
-
-    public MealRestController(MealService service) {
-        this.service = service;
-    }
-
+    @Autowired
+    private  MealService service;
 
     public Meal create(Meal meal) {
         log.info("create {}", meal);

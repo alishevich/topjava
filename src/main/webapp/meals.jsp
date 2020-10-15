@@ -21,8 +21,6 @@
     <h3><a href="index.html">Home</a></h3>
     <hr/>
     <h2>Meals</h2>
-    <a href="meals?action=create">Add Meal</a>
-    <br><br>
     <form method="get" action="meals">
         <label for="startDate">От даты(включая) </label>
         <input type="date" id="startDate" name="startDate" value=${param.get("startDate")}>
@@ -40,6 +38,8 @@
             <button type="submit" formmethod="get" formaction="meals">Отфильтровать</button>
         </p>
     </form>
+    <a href="meals?action=create">Add Meal</a>
+    <br><br>
     <table border="1" cellpadding="8" cellspacing="0">
         <thead>
         <tr>

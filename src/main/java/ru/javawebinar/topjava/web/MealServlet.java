@@ -25,10 +25,6 @@ public class MealServlet extends HttpServlet {
 
     private MealRestController controller;
 
-    public MealServlet(MealRestController controller) {
-        this.controller = controller;
-    }
-
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);

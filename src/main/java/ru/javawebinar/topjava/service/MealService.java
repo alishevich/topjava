@@ -3,7 +3,7 @@ package ru.javawebinar.topjava.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.javawebinar.topjava.model.Meal;
-import ru.javawebinar.topjava.repository.MealRepository;
+import ru.javawebinar.topjava.repository.inmemory.InMemoryMealRepository;
 import ru.javawebinar.topjava.util.ValidationUtil;
 
 import java.util.Collection;
@@ -11,10 +11,10 @@ import java.util.Collection;
 @Service
 public class MealService {
 
+    private final InMemoryMealRepository repository;
 
-    private final MealRepository repository;
-
-    public MealService(MealRepository repository) {
+    @Autowired
+    public MealService(InMemoryMealRepository repository) {
      this.repository = repository;
     }
 
