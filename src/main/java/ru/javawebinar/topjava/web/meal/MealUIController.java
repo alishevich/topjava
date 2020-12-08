@@ -1,17 +1,20 @@
 package ru.javawebinar.topjava.web.meal;
 
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.lang.Nullable;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
-import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.to.MealTo;
+import ru.javawebinar.topjava.web.SecurityUtil;
 
+import javax.validation.Valid;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.StringJoiner;
 
 @RestController
 @RequestMapping(value = "/profile/meals", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -32,10 +35,22 @@ public class MealUIController extends AbstractMealController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void create(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dateTime,
-                       @RequestParam String description,
-                       @RequestParam int calories) {
-        super.create(new Meal(null, dateTime, description, calories));
+    public ResponseEntity<String> createOrUpdate(@Valid MealTo mealTo, BindingResult result) {
+        if (result.hasErrors()) {
+            StringJoiner joiner = new StringJoiner("<br>");
+            for (FieldError fe : result.getFieldErrors()) {
+                String format = String.format("[%s] %s", fe.getField(), fe.getDefaultMessage());
+                joiner.add(format);
+            }
+            String errorFieldsMsg = joiner.toString();
+            return ResponseEntity.unprocessableEntity().body(errorFieldsMsg);
+        }
+        if (mealTo.isNew()) {
+            super.create(mealTo);
+        } else {
+            super.update(mealTo, SecurityUtil.authUserId());
+        }
+        return ResponseEntity.ok().build();
     }
 
     @Override
