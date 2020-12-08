@@ -7,6 +7,7 @@ import org.springframework.lang.Nullable;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
+import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.to.MealTo;
 import ru.javawebinar.topjava.web.SecurityUtil;
 
@@ -19,6 +20,12 @@ import java.util.StringJoiner;
 @RestController
 @RequestMapping(value = "/profile/meals", produces = MediaType.APPLICATION_JSON_VALUE)
 public class MealUIController extends AbstractMealController {
+
+    @Override
+    @GetMapping("/{id}")
+    public Meal get(@PathVariable int id) {
+        return super.get(id);
+    }
 
     @Override
     @GetMapping
@@ -48,7 +55,7 @@ public class MealUIController extends AbstractMealController {
         if (mealTo.isNew()) {
             super.create(mealTo);
         } else {
-            super.update(mealTo, SecurityUtil.authUserId());
+            super.update(mealTo, mealTo.getId());
         }
         return ResponseEntity.ok().build();
     }
