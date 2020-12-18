@@ -47,7 +47,7 @@ public class ExceptionInfoHandler {
         String[] details = e.getBindingResult().getFieldErrors().stream()
                 .map(fe -> String.format("[%s] %s", fe.getField(), fe.getDefaultMessage()))
                 .toArray(String[]::new);
-        return logAndGetErrorInfo(req, e, true, APP_ERROR, details);
+        return logAndGetErrorInfo(req, e, true, VALIDATION_ERROR, details);
     }
 
     @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)  // 422
